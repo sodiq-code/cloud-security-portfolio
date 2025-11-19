@@ -1,0 +1,29 @@
+# Terraform
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+
+# AWS / credentials
+*.pem
+*.key
+.aws/
+
+# VSCode
+.vscode/
+
+# LocalStack / Docker
+localstack/
+localstack_data/
+
+# Docker
+docker-compose.override.yml
+
+# Python
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+*.env
+
