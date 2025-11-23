@@ -15,15 +15,25 @@ resource "aws_s3_bucket_public_access_block" "good_security" {
     restrict_public_buckets = true  # Restrict access to only AWS accounts and users
 }
 
+resource "aws_kms_key" "s3_key" {
+  description             = "KMS Key for S3 bucket encryption"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true # Best practice to enable rotation
+}
+
+resource "aws_kms_alias" "s3_alias" {
+  name          = "alias/s3-app-key"
+  target_key_id = aws_kms_key.s3_key.key_id
+}
+
 # Enforce server-side encryption by default on the S3 bucket
 resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
-    
-    # References the unique identifier of the S3 bucket resource for use in dependent configurations
-    bucket = aws_s3_bucket.test_bucket.id         
+    bucket = aws_s3_bucket.test_bucket.id 
 
     rule {
         apply_server_side_encryption_by_default {
-            sse_algorithm = "AES256"  # Use S3-managed AES-256 encryption
+            sse_algorithm     = "aws:kms"                  # Use KMS encryption
+            kms_master_key_id = aws_kms_key.s3_key.arn     # Reference the key ARN
         }
     }
 }
