@@ -14,8 +14,10 @@ jobs:
     runs-on: ubuntu-latest             # Use GitHub-hosted Ubuntu runner
 
     steps:
-      - name: Checkout code            # Make repo files available on the runner
+     - name: Checkout code 
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Force a full clone to ensure the latest file state
 
       - name: Run Trivy Scanner (Infrastructure as Code)
         uses: aquasecurity/trivy-action@master  # Official Trivy GitHub Action
