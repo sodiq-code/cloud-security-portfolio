@@ -1,30 +1,29 @@
-name: DevSecOps Security Scan          # Name of the GitHub Actions workflow
+name: DevSecOps Security Scan
 
 on:
   push:
-    branches: [ main ]                 # Run only on pushes to main branch
-  pull_request:                        # Run on all pull requests (any branch)
+    branches: [ main ]
+  pull_request:
 
 permissions:
-  contents: read                       # GITHUB_TOKEN can only read repo contents
+  contents: read
 
 jobs:
-  trivy-iac:                           # Job ID used internally by GitHub Actions
-    name: Trivy IaC Scan               # Job name shown in the Actions UI
-    runs-on: ubuntu-latest             # Use GitHub-hosted Ubuntu runner
-
+  trivy-iac:
+    name: Trivy IaC Scan
+    runs-on: ubuntu-latest
     steps:
-     - name: Checkout code 
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Force a full clone to ensure the latest file state
+          fetch-depth: 0
 
-      - name: Run Trivy Scanner (Infrastructure as Code)
-        uses: aquasecurity/trivy-action@master  # Official Trivy GitHub Action
+      - name: Run Trivy Scanner (IaC)
+        uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'config'          # Scan IaC/config files (e.g., Terraform, K8s)
-          hide-progress: true          # Cleaner logs; no progress bar
-          format: 'table'              # Human-readable table output in logs
-          exit-code: '1'               # Fail workflow if issues are found
-          ignore-unfixed: true         # Ignore issues with no available fix yet
-          severity: 'CRITICAL,HIGH'    # Only flag high-impact issues
+          scan-type: 'config'
+          hide-progress: true
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
