@@ -12,7 +12,6 @@ resource "aws_s3_bucket" "logs" {      # Define an S3 bucket resource named "log
 resource "aws_s3_bucket_acl" "logs_acl" {  # Define a bucket ACL resource named "logs_acl"
     bucket = aws_s3_bucket.logs.id         # Apply ACL to the "logs" bucket by its ID
     acl    = "private"                     # Set access control list so bucket is fully private
-}
 
 resource "aws_s3_bucket_public_access_block" "logs_public_access_block" {
   # Targets the S3 bucket defined in this file
