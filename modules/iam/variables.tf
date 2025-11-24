@@ -1,0 +1,1 @@
+variable "environment" { type = string }   # Deployment environment (e.g., dev, staging, prod)
