@@ -85,6 +85,7 @@ resource "aws_security_group" "web_sg" {
 # Creates a t2.micro instance in the public subnet with:
 # - IAM instance profile for AWS service permissions
 # - Security group for network access control
+# - LocalStack-compatible timeouts and lifecycle settings
 # -----------------------------------------------------------------------------
 resource "aws_instance" "web" {
         ami                    = "ami-12345678"                    # Placeholder AMI ID (use valid ID in production)
@@ -93,7 +94,27 @@ resource "aws_instance" "web" {
         iam_instance_profile   = module.iam.instance_profile_name  # Attach IAM role for AWS API access
         vpc_security_group_ids = [aws_security_group.web_sg.id]    # Apply firewall rules
 
+        # Explicit credit specification for T2 instances to avoid LocalStack issues
+        # LocalStack may not fully support default credit specification behavior
+        credit_specification {
+                cpu_credits = "standard"
+        }
+
         tags = {
                 Name = "Project-A-WebServer"
+        }
+
+        # Timeouts to prevent hanging during LocalStack deployments
+        # LocalStack EC2 may not return expected instance status, causing indefinite waits
+        timeouts {
+                create = "5m"
+                update = "5m"
+                delete = "5m"
+        }
+
+        # Lifecycle settings for LocalStack compatibility
+        # create_before_destroy ensures smoother resource replacement
+        lifecycle {
+                create_before_destroy = true
         }
 }
