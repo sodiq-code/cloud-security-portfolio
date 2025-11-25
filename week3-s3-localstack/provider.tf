@@ -18,5 +18,6 @@ provider "aws" {                           # Configure the AWS provider instance
 
   endpoints {                    # Override default AWS service endpoints
     s3 = "http://localhost:4566" # Point S3 API calls to LocalStack running on localhost:4566
+    kms = "http://localhost:4566"
   }
 }

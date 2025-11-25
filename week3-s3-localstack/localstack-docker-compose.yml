@@ -1,13 +1,15 @@
 version: "3.8"
+
 services:
   localstack:
     image: localstack/localstack:latest
     ports:
-      - "4566:4566"
-      - "4571:4571"
+      - "4566:4566"  # Main LocalStack API endpoint
+      - "4571:4571"  # Legacy port (deprecated in newer versions)
     environment:
-      - SERVICES=s3
-      - DEFAULT_REGION=us-east-1
-      - DATA_DIR=/tmp/localstack/data
-    # volumes: # Commented out for testing
-    #  - "./localstack_data:/tmp/localstack"
+      - SERVICES=s3,ec2,iam,sts,kms  # AWS services to emulate
+      - DEFAULT_REGION=us-east-1  # Default AWS region
+      - DATA_DIR=/tmp/localstack/data  # Internal data storage path
+    volumes:  
+      #- "./localstack_data:/tmp/localstack"  # Persists data across container restarts
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Gives LocalStack access to Docker on your host

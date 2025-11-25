@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  localstack:
+    container_name: week5-localstack
+    image: localstack/localstack:latest
+    ports:
+      - "127.0.0.1:4566:4566"            # Bind to localhost specifically
+      - "127.0.0.1:4510-4559:4510-4559"  # External service port range
+    environment:
+      - SERVICES=s3,ec2,iam,sts,kms
+      - DEBUG=1                          # Turn on debug logs so we see WHY it fails
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - "${localstack_volume_dir:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
