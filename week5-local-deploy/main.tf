@@ -7,7 +7,7 @@ terraform {
     required_providers {
         aws = {
             source  = "hashicorp/aws"
-            version = "~> 5.0"
+            version = "~> 5.0"    
         }
     }
 }
@@ -56,7 +56,7 @@ module "iam" {
 # Security Group (Firewall Rules)
 # Defines inbound/outbound traffic rules for the web server.
 # - Allows inbound HTTP (port 80) from any IP address
-# - Allows all outbound traffic (required for updates, external APIs, etc.)
+# - Allows all outbound traffic to HTTPS (port 443) (required for updates, external APIs, etc.)
 # -----------------------------------------------------------------------------
 resource "aws_security_group" "web_sg" {
         name        = "web-server-sg"
@@ -71,29 +71,35 @@ resource "aws_security_group" "web_sg" {
                 cidr_blocks = ["0.0.0.0/0"]        # WARNING: Open to all IPs (use cautiously)
         }
 
-        # Outbound rule: Allow all outbound traffic
+        # Outbound rule: Allow HTTPS traffic to anywhere
         egress {
-                from_port   = 0
-                to_port     = 0
-                protocol    = "-1"                 # "-1" means all protocols
-                cidr_blocks = ["0.0.0.0/0"]
-        }
+        description = "Allow HTTPS outbound only (required for updates, external APIs, etc.)"
+        from_port   = 443
+        to_port     = 443
+        protocol    = "tcp"
+        cidr_blocks = ["0.0.0.0/0"] # Still wide, but restricted to HTTPS port
+    }
 }
 
 # -----------------------------------------------------------------------------
 # EC2 Instance (Web Server)
-# Creates a t2.micro instance in the public subnet with:
-# - IAM instance profile for AWS service permissions
-# - Security group for network access control
-# -----------------------------------------------------------------------------
 resource "aws_instance" "web" {
-        ami                    = "ami-12345678"                    # Placeholder AMI ID (use valid ID in production)
-        instance_type          = "t2.micro"                        # Free-tier eligible instance size
-        subnet_id              = module.vpc.public_subnet_id       # Deploy in public subnet for internet access
-        iam_instance_profile   = module.iam.instance_profile_name  # Attach IAM role for AWS API access
-        vpc_security_group_ids = [aws_security_group.web_sg.id]    # Apply firewall rules
+    ami                    = "ami-12345678"
+    instance_type          = "t2.micro"                        
+    subnet_id              = module.vpc.public_subnet_id
+    iam_instance_profile   = module.iam.instance_profile_name
+    vpc_security_group_ids = [aws_security_group.web_sg.id]
 
-        tags = {
-                Name = "Project-A-WebServer"
-        }
+    tags = {
+        Name = "Project-A-WebServer"
+    }
+    metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"  # Forces IMDSv2
+  }
+  root_block_device {
+    encrypted = true
+  }
 }
+
+

@@ -5,12 +5,14 @@ services:
     container_name: week5-localstack
     image: localstack/localstack:latest
     ports:
-      - "127.0.0.1:4566:4566"            # Bind to localhost specifically
-      - "127.0.0.1:4510-4559:4510-4559"  # External service port range
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4510-4559:4510-4559"
     environment:
       - SERVICES=s3,ec2,iam,sts,kms
-      - DEBUG=1                          # Turn on debug logs so we see WHY it fails
+      - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
+      - EC2_VM_MANAGER=mock          #  ADD THIS - Uses mocked EC2 (instant creation!)
+      - EAGER_SERVICE_LOADING=1      # Pre-loads services on startup
     volumes:
       - "${localstack_volume_dir:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
