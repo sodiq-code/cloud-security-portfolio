@@ -71,17 +71,20 @@ resource "aws_security_group" "web_sg" {
                 cidr_blocks = ["0.0.0.0/0"]        # WARNING: Open to all IPs (use cautiously)
         }
 
-        # Outbound rule: Allow HTTPS traffic to anywhere
+        # Outbound rule: Restrict Egress Traffic (Security Best Practice)
+        # Instead of allowing unrestricted outbound access (0.0.0.0/0), this rule
+        # limits egress to only the VPC CIDR block (10.0.0.0/16).
+        
         egress {
-        description = "Allow HTTPS outbound only (required for updates, external APIs, etc.)"
-        from_port   = 443
-        to_port     = 443
-        protocol    = "tcp"
-        cidr_blocks = ["0.0.0.0/0"] # Still wide, but restricted to HTTPS port
-    }
+                description = "Restrict egress to VPC only - blocks internet access"
+                from_port   = 0                   # All ports
+                to_port     = 0                   # All ports
+                protocol    = "-1"                # All protocols (-1 = any)
+                cidr_blocks = ["10.0.0.0/16"]     # VPC internal traffic only
+        }
 }
 
-# -----------------------------------------------------------------------------
+# --------------------------------------------------------------------------
 # EC2 Instance (Web Server)
 resource "aws_instance" "web" {
     ami                    = "ami-12345678"
