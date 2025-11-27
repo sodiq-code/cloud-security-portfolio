@@ -62,7 +62,7 @@ resource "aws_cloudtrail" "main" {
 
 # 2. GuardDuty (The Alarm System)
 # Threat detection service that monitors for malicious activity
-resource "aws_guardduty_detector" "main" {
-    enable                       = true
-    finding_publishing_frequency = "FIFTEEN_MINUTES"  # How often findings are exported
-}
+# resource "aws_guardduty_detector" "main" {
+#    enable                       = true
+#    finding_publishing_frequency = "FIFTEEN_MINUTES"  # How often findings are exported
+# }

@@ -1,8 +1,8 @@
-# IAM role assumed by EC2 instances
+# IAM Role for EC2 instances
+# Allows EC2 service to assume this role
 resource "aws_iam_role" "ec2_role" {
     name = "${var.environment}-ec2-role"
 
-    # Trust policy ensuring that only EC2 service principals can assume the role
     assume_role_policy = jsonencode({
         Version = "2012-10-17"
         Statement = [
@@ -17,34 +17,39 @@ resource "aws_iam_role" "ec2_role" {
     })
 }
 
-# Least-privilege S3 read-only policy for scoped bucket access
+# S3 Read-Only Policy
+# Grants read access to specified S3 bucket
 resource "aws_iam_policy" "s3_read_only" {
     name        = "${var.environment}-s3-read-policy"
     description = "Allow EC2 to read from specific S3 bucket"
 
-    # Permissions granted to the role; currently global, to be constrained to bucket ARNs
+    # Handle wildcard "*" separately to avoid MalformedPolicyDocument error
+    # When "*" is passed, use it directly; otherwise, include bucket and object ARNs
     policy = jsonencode({
         Version = "2012-10-17"
         Statement = [
             {
                 Action = [
-                    "s3:ListBucket",
-                    "s3:GetObject"
+                    "s3:ListBucket",   # Required for listing bucket contents
+                    "s3:GetObject"     # Required for reading objects
                 ]
                 Effect   = "Allow"
-                Resource = "*" # replace with specific bucket and object ARNs for stronger least-privilege
+                Resource = var.target_bucket_arn == "*" ? ["*"] : [
+                    var.target_bucket_arn,          # Bucket-level permissions
+                    "${var.target_bucket_arn}/*"    # Object-level permissions
+                ]
             }
         ]
     })
 }
 
-# Attach the S3 read-only policy to the EC2 IAM role
+# Attach S3 policy to the EC2 role
 resource "aws_iam_role_policy_attachment" "attach_s3" {
     role       = aws_iam_role.ec2_role.name
     policy_arn = aws_iam_policy.s3_read_only.arn
 }
 
-# Instance profile exposing the IAM role to EC2 instances via metadata service
+# Instance profile to associate the IAM role with EC2 instances
 resource "aws_iam_instance_profile" "ec2_profile" {
     name = "${var.environment}-ec2-profile"
     role = aws_iam_role.ec2_role.name

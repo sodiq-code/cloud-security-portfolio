@@ -1,6 +1,41 @@
 # modules/logging/main.tf
 # This module creates a secure S3 bucket for storing CloudTrail logs
 
+# -----------------------------------------------------------------------------
+# REQUIRED RESOURCE: KMS Key for S3 Bucket Encryption
+# -----------------------------------------------------------------------------
+resource "aws_kms_key" "cloudtrail_kms_key" {
+  description             = "KMS key for CloudTrail logging bucket"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+  
+  # The policy ensures the root account can manage the key and CloudTrail can use it.
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid    = "Enable IAM User Permissions"
+        Effect = "Allow"
+        Principal = {
+          AWS = "*"
+        }
+        Action   = "kms:*"
+        Resource = "*"
+      },
+      # Grants CloudTrail permission to perform encryption operations using this key.
+      {
+        Sid    = "Allow CloudTrail to encrypt logs"
+        Effect = "Allow"
+        Principal = {
+          Service = "cloudtrail.amazonaws.com"
+        }
+        Action   = "kms:GenerateDataKey*"
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 # 1. The Log Bucket
 # Creates the primary S3 bucket where all security logs will be stored
 # Uses environment prefix and random suffix to ensure unique bucket names

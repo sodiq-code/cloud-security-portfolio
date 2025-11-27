@@ -2,17 +2,14 @@ version: "3.8"
 
 services:
   localstack:
-    container_name: week5-localstack
-    image: localstack/localstack:latest
+    image: localstack/localstack-pro:latest
     ports:
-      - "127.0.0.1:4566:4566"
-      - "127.0.0.1:4510-4559:4510-4559"
+      - "4566:4566"  # Main LocalStack API endpoint
+      - "4571:4571"  # Legacy port (deprecated in newer versions)
     environment:
-      - SERVICES=s3,ec2,iam,sts,kms
-      - DEBUG=1
-      - DOCKER_HOST=unix:///var/run/docker.sock
-      - EC2_VM_MANAGER=mock          #  ADD THIS - Uses mocked EC2 (instant creation!)
-      - EAGER_SERVICE_LOADING=1      # Pre-loads services on startup
-    volumes:
-      - "${localstack_volume_dir:-./volume}:/var/lib/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - LOCALSTACK_AUTH_TOKEN=ls-yiLatazO-6832-wOrA-TIgI-Cito4778a78f
+      - SERVICES=s3,ec2,iam,sts,kms,cloudtrail,guardduty  # AWS services to emulate
+      - PERSISTENCE=1 # Enables persistence for LocalStack data
+    volumes:  
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack" # Persists data across container restarts
+      - "/var/run/docker.sock:/var/run/docker.sock"  # Gives LocalStack access to Docker on your host

@@ -74,7 +74,7 @@ resource "aws_security_group" "web_sg" {
         # Outbound rule: Restrict Egress Traffic (Security Best Practice)
         # Instead of allowing unrestricted outbound access (0.0.0.0/0), this rule
         # limits egress to only the VPC CIDR block (10.0.0.0/16).
-        
+
         egress {
                 description = "Restrict egress to VPC only - blocks internet access"
                 from_port   = 0                   # All ports
@@ -103,6 +103,9 @@ resource "aws_instance" "web" {
   root_block_device {
     encrypted = true
   }
+  timeouts {
+        create = "1m"
+    }
 }
 
 

@@ -1,15 +1,22 @@
-version: "3.8"
-
+version: '3.8'
 services:
+  # The LocalStack Pro Service
   localstack:
-    image: localstack/localstack-pro:latest
+    image: localstack/localstack-pro:latest  # The Pro image (required for full features)
+    container_name: localstack_pro_svc
+    privileged: true                        # Required for EC2 (sibling container spawning)
+    network_mode: bridge
     ports:
-      - "4566:4566"  # Main LocalStack API endpoint
-      - "4571:4571"  # Legacy port (deprecated in newer versions)
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+      - "5678:5678"
     environment:
       - LOCALSTACK_AUTH_TOKEN=ls-yiLatazO-6832-wOrA-TIgI-Cito4778a78f
       - SERVICES=s3,ec2,iam,sts,kms,cloudtrail,guardduty  # AWS services to emulate
       - PERSISTENCE=1 # Enables persistence for LocalStack data
+      - DOCKER_HOST=unix:///var/run/docker.sock  # Required for sibling container spawning
     volumes:  
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack" # Persists data across container restarts
       - "/var/run/docker.sock:/var/run/docker.sock"  # Gives LocalStack access to Docker on your host
+
+      
