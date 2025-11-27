@@ -24,7 +24,7 @@ resource "aws_internet_gateway" "igw" {              # Create an Internet Gatewa
 resource "aws_subnet" "public" {                     # Create a public subnet resource
     vpc_id                  = aws_vpc.main.id        # Place the subnet in the previously created VPC
     cidr_block              = var.public_subnet_cidr # Use CIDR for the public subnet from variable
-    map_public_ip_on_launch = true                   # Auto-assign public IPs to instances launched here
+    map_public_ip_on_launch = false                  # Do not auto-assign public IPs to instances launched here
     availability_zone       = "${var.region}a"       # Set the subnet to the first AZ in the given region
 
     tags = {                                          # Add metadata tags to the public subnet
