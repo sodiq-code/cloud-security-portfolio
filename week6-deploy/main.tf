@@ -87,3 +87,35 @@ module "iam" {
     # Restricts IAM permissions to ONLY the logging bucket (least-privilege)
     target_bucket_arn = module.logging.bucket_arn
 }
+
+# -----------------------------------------------------------------------------
+# Security Group (Firewall Rules)
+# Defines inbound/outbound traffic rules for the web server.
+# - Allows inbound HTTP (port 80) from any IP address
+# - Allows all outbound traffic to HTTPS (port 443) (required for updates, external APIs, etc.)
+# -----------------------------------------------------------------------------
+resource "aws_security_group" "web_sg" {
+        name        = "web-server-sg"
+        description = "Allow HTTP traffic"
+        vpc_id      = module.vpc.vpc_id       # Attach to VPC created by module
+
+        # Inbound rule: Allow HTTP traffic from anywhere
+        ingress {
+                from_port   = 80
+                to_port     = 80
+                protocol    = "tcp"
+                cidr_blocks = ["0.0.0.0/0"]        # WARNING: Open to all IPs (use cautiously)
+        }
+
+        # Outbound rule: Restrict Egress Traffic (Security Best Practice)
+        # Instead of allowing unrestricted outbound access (0.0.0.0/0), this rule
+        # limits egress to only the VPC CIDR block (10.0.0.0/16).
+
+        egress {
+                description = "Restrict egress to VPC only - blocks internet access"
+                from_port   = 0                   # All ports
+                to_port     = 0                   # All ports
+                protocol    = "-1"                # All protocols (-1 = any)
+                cidr_blocks = ["10.0.0.0/16"]     # VPC internal traffic only
+        }
+}
