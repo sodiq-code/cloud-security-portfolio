@@ -1,0 +1,20 @@
+# =============================================================================
+# TRIVY IGNORE LIST - WEEK 8 HA LAB (LOCALSTACK)
+# =============================================================================
+# This file suppresses specific security checks for the LocalStack lab environment.
+# In a production environment, these risks would be remediated.
+# =============================================================================
+
+# Risk: Load Balancer is exposed to the public internet
+# Reason: This is a public-facing web application demo; public access is required.
+AVD-AWS-0053
+
+# Risk: Listener uses HTTP (Port 80) instead of HTTPS (Port 443)
+# Reason: LocalStack limitation. Generating valid SSL certificates for localhost is 
+#         out of scope. Production must use AWS ACM + HTTPS.
+AVD-AWS-0054
+
+# Risk: Security Group allows unrestricted egress (0.0.0.0/0)
+# Reason: Instances need internet access to download package updates (yum/apt).
+#         In production, this would be restricted to a NAT Gateway IP or VPC Endpoint.
+AVD-AWS-0104

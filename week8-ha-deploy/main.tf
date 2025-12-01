@@ -110,7 +110,14 @@ resource "aws_launch_template" "app" {
     }
 
     # Apply firewall rules - instances only accept traffic from ALB
+    # Security: Only allow traffic from ALB security group
     vpc_security_group_ids = [aws_security_group.instance_sg.id]
+
+    # Require IMDSv2 to prevent SSRF attacks on instance metadata
+    metadata_options {
+        http_tokens   = "required"
+        http_endpoint = "enabled"
+    }
 
     # Tag all instances for easy identification in AWS Console
     tag_specifications {
@@ -278,9 +285,10 @@ resource "aws_lb" "main" {
     name               = "ha-load-balancer"
     internal           = false                          # false = internet-facing
     load_balancer_type = "application"                  # Layer 7 (HTTP/HTTPS)
+    drop_invalid_header_fields = true  # Prevent HTTP header injection attacks
     security_groups    = [aws_security_group.alb_sg.id]
     subnets            = [module.vpc.public_subnet_id]
-    # Using 2 public subnets across different AZs for high availability
+    #Note:  Using 2 public subnets across different AZs for high availability in Production
 }
 
 # =============================================================================
