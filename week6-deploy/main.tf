@@ -119,3 +119,43 @@ resource "aws_security_group" "web_sg" {
                 cidr_blocks = ["10.0.0.0/16"]     # VPC internal traffic only
         }
 }
+
+# =============================================================================
+# Compute Resource (EC2 Instance)
+# =============================================================================
+# The actual Web Server instance.
+# - Placed in the Public Subnet (from VPC module)
+# - Protected by the Security Group defined above
+# - Identity provided by the IAM Instance Profile (from IAM module)
+# =============================================================================
+# resource "aws_instance" "web" {
+#   ami           = "ami-12345678"  # LocalStack dummy AMI
+#   instance_type = "t2.micro"
+
+#   # Network Placement
+#   subnet_id              = module.vpc.public_subnet_id
+#   vpc_security_group_ids = [aws_security_group.web_sg.id]
+
+#   # Identity (The IAM Role)
+#   iam_instance_profile = module.iam.instance_profile_name
+
+#   # Hardening: Enforce IMDSv2 (Token required) to prevent SSRF
+#   metadata_options {
+#     http_tokens   = "required"
+#     http_endpoint = "enabled"
+#   }
+
+#   # Hardening: Encrypt Root Volume
+#   root_block_device {
+#     encrypted = true
+#   }
+
+#   # Timeout setting to prevent "Hanging" issues in LocalStack
+#   timeouts {
+#     create = "1m"
+#   }
+
+#   tags = {
+#     Name = "Project-A-Secure-Web-Server"
+#   }
+# }
