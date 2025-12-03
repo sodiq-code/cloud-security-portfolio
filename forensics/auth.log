@@ -1,0 +1,20 @@
+Dec  1 08:01:12 ip-10-0-0-5 sshd[1231]: Failed password for root from 192.168.1.50 port 44321 ssh2
+Dec  1 08:02:12 ip-10-0-0-5 sshd[1232]: Failed password for root from 192.168.1.50 port 44322 ssh2
+Dec  1 08:03:12 ip-10-0-0-5 sshd[1233]: Failed password for root from 192.168.1.50 port 44323 ssh2
+Dec  1 08:04:12 ip-10-0-0-5 sshd[1234]: Failed password for root from 192.168.1.50 port 44324 ssh2
+Dec  1 08:05:12 ip-10-0-0-5 sshd[1235]: Failed password for root from 192.168.1.50 port 44325 ssh2
+Dec  1 08:06:12 ip-10-0-0-5 sshd[1236]: Failed password for root from 192.168.1.50 port 44326 ssh2
+Dec  1 08:07:12 ip-10-0-0-5 sshd[1237]: Failed password for root from 192.168.1.50 port 44327 ssh2
+Dec  1 08:08:12 ip-10-0-0-5 sshd[1238]: Failed password for root from 192.168.1.50 port 44328 ssh2
+Dec  1 08:09:12 ip-10-0-0-5 sshd[1239]: Failed password for root from 192.168.1.50 port 44329 ssh2
+Dec  1 08:10:12 ip-10-0-0-5 sshd[12310]: Failed password for root from 192.168.1.50 port 443210 ssh2
+Dec  1 08:11:12 ip-10-0-0-5 sshd[12311]: Failed password for root from 192.168.1.50 port 443211 ssh2
+Dec  1 08:12:12 ip-10-0-0-5 sshd[12312]: Failed password for root from 192.168.1.50 port 443212 ssh2
+Dec  1 08:13:12 ip-10-0-0-5 sshd[12313]: Failed password for root from 192.168.1.50 port 443213 ssh2
+Dec  1 08:14:12 ip-10-0-0-5 sshd[12314]: Failed password for root from 192.168.1.50 port 443214 ssh2
+Dec  1 08:15:12 ip-10-0-0-5 sshd[12315]: Failed password for root from 192.168.1.50 port 443215 ssh2
+Dec  1 08:20:01 ip-10-0-0-5 sshd[1299]: Accepted password for user 'admin' from 192.168.1.50 port 5566 ssh2
+Dec  1 08:20:01 ip-10-0-0-5 systemd-logind[455]: New session 54 of user admin.
+Dec  1 08:25:30 ip-10-0-0-5 useradd[1305]: new user: name=support_service, UID=0, GID=0, home=/root, shell=/bin/bash
+Dec  1 08:25:30 ip-10-0-0-5 passwd[1306]: password changed for support_service
+Dec  1 08:30:15 ip-10-0-0-5 sudo:    admin : TTY=pts/0 ; PWD=/home/admin ; USER=root ; COMMAND=/bin/tar -czf /tmp/data_dump.tar.gz /var/www/html
