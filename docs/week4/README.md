@@ -1,4 +1,4 @@
-# 🛡️ Week 4: DevSecOps & Automated Security Guardrails
+#  Week 4: DevSecOps & Automated Security Guardrails
 **Status:** ✅ Pipeline Active & Validated
 
 ## 1. Objective

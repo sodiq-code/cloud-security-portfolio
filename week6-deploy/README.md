@@ -1,4 +1,4 @@
-# 🛡️ PROJECT A: HARDENED WEB APPLICATION (SECURE BASELINE)
+#  PROJECT A: HARDENED WEB APPLICATION (SECURE BASELINE)
 
 ## 1. Executive Summary
 This project implements an Enterprise-Ready Architecture cloud environment using **Infrastructure as Code (Terraform)**. It demonstrates a "Security First" architecture designed to protect sensitive workloads against network intrusion, unauthorized access, and data exfiltration.
