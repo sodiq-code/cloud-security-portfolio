@@ -29,15 +29,21 @@ It transforms a single-server architecture into a **Self-Healing Fleet** using A
 *(Verifying Auto Scaling Group capacity = 2)*
 
 <p align="center">
+  <img src="./screenshot/auto-scaling.png" alt="Auto Scaling" width="700"/>
+  <br>
+  <em>Figure 1: Auto Scaling Complete</em>
+</p>
+
+<p align="center">
   <img src="./screenshot/ha-success.png" alt="ASG Success" width="700"/>
   <br>
-  <em>Figure 1: Terraform Apply Complete</em>
+  <em>Figure 2: Terraform Apply Complete</em>
 </p>
 
 <p align="center">
   <img src="./screenshot/ha-success_1.png" alt="Terminal Success" width="700"/>
   <br>
-  <em>Figure 2: ASG Scaling Events</em>
+  <em>Figure 3: ASG Scaling Events</em>
 </p>
 
 ## 6. Deployment Verification
