@@ -28,6 +28,10 @@ This module provisions a "Secure-by-Design" S3 bucket. Unlike standard tutorials
 ## 4. LocalStack Configuration
 To enable offline development, the AWS Provider is configured to route requests to the local Docker container.
 
+## 5. Evidence
+![Terraform Plan](../docs/week3/screenshots/plan.png)
+![Terraform Apply](../docs/week3/screenshots/apply.png)
+
 ```hcl
 provider "aws" {
   # ...
