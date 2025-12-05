@@ -24,14 +24,10 @@ It transforms a single-server architecture into a **Self-Healing Fleet** using A
 
 ## 5. Artifacts
 * **Infrastructure Code:** [main.tf](./main.tf)
+
 * **Scaling Evidence:**
-<<<<<<< HEAD
-![High Availability Success](../docs/week8/screenshots/ha-success.png)
-![High Availability Success 2](../docs/week8/screenshots/ha-success_1.png)
-=======
-docs/week8/screenshot/auto-scaling.png
-![High Availability Success 2](/docs/week8/screenshots/ha-success_1.png)
->>>>>>> 20ff7532b3476016590c046256efb21d736f5998
+![High Availability Success](.\screenshot\ha-success.png)
+![High Availability Success 2](.\screenshot\ha-success_1.png)
 
 ## 6. Deployment Verification
 To deploy this stack locally:
