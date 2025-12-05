@@ -14,7 +14,8 @@ Unlike standard tutorials, this portfolio focuses on **"Real-World" implementati
 
 | Project Phase | Folder Link | Key Technologies | Description |
 | :--- | :--- | :--- | :--- |
-| **Project A: Secure Network** | **[`week6-deploy`](./week6-deploy)** | VPC, IAM, Subnets | A "Secure-by-Design" segmented network with Public/Private isolation and Least Privilege Identity. |
+| **DevSecOps Guardrails** | **[View Security Report](./docs/week4/README.md)** | GitHub Actions, Trivy | **(Shift-Left)** Automated vulnerability scanning pipeline that blocks insecure Terraform commits before deployment. |
+| **Project A: Secure Network** | **[View Architecture Report](./docs/project-a-report.md)** | VPC, IAM, Subnets | A "Secure-by-Design" segmented network with Public/Private isolation and Least Privilege Identity. |
 | **Project A+: High Availability** | **[`week8-ha-deploy`](./week8-ha-deploy)** | ALB, ASG, WAF | **(DevOps Upgrade)** Refactored Project A to support auto-scaling, load balancing, and Layer 7 Web Application Firewall protection. |
 | **Observability & Logging** | **[`week6-deploy`](./week6-deploy)** | CloudTrail, S3, KMS | Centralized, encrypted audit logging and automated threat detection (GuardDuty). |
 | **Security Automation (SOAR)** | **[`automation`](./automation)** | Python (Boto3) | A custom script that auto-remediates threats by dynamically updating Network ACLs to block malicious IPs. |
