@@ -25,9 +25,20 @@ It transforms a single-server architecture into a **Self-Healing Fleet** using A
 ## 5. Artifacts
 * **Infrastructure Code:** [main.tf](./main.tf)
 
-* **Scaling Evidence:**
-![HA Success](.\screenshot\ha-success.png)
-![HA Success2](.\screenshot\ha-success_1.png)
+### **Evidence of Scale**
+*(Verifying Auto Scaling Group capacity = 2)*
+
+<p align="center">
+  <img src="./screenshot/ha-success.png" alt="ASG Success" width="700"/>
+  <br>
+  <em>Figure 1: ASG Scaling Events</em>
+</p>
+
+<p align="center">
+  <img src="./screenshot/ha-success_1.png" alt="Terminal Success" width="700"/>
+  <br>
+  <em>Figure 2: Terraform Apply Complete</em>
+</p>
 
 ## 6. Deployment Verification
 To deploy this stack locally:
