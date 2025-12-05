@@ -20,10 +20,6 @@ A Python utility that automatically blocks malicious IP addresses at the subnet 
 * `boto3` library installed (`pip install -r requirements.txt`)
 * Active AWS/LocalStack session
 
-**Execution:**
-```bash
-python auto_remediate_nacl.py
-
 ## 4. Artifacts
 * **Source Code:** [auto_remediate_nacl.py](./auto_remediate_nacl.py)
 * **Execution Evidence:**
@@ -36,4 +32,8 @@ While this lab runs the script locally, in a production environment, the workflo
 2.  **EventBridge** filters for "High Severity" findings.
 3.  **Lambda** triggers this Python script, passing the Malicious IP as an input variable.
 4.  **NACL** is updated to block the IP.
+
+**Execution:**
+```bash
+python auto_remediate_nacl.py
 

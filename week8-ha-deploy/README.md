@@ -21,14 +21,15 @@ It transforms a single-server architecture into a **Self-Healing Fleet** using A
 * **Provider Conflict:** Pinned AWS Provider to `v4.67.0` to resolve a compatibility bug between Terraform `v5.x` and LocalStack's S3 API.
 * **Lab Constraints:** Configured `.trivyignore` to accept HTTP (Port 80) and Open Egress risks specifically for the local simulation environment.
 
-## 5. Deployment Verification
-To deploy this stack locally:
-```bash
-terraform init
-terraform apply --auto-approve
 
-## 6. Artifacts
+## 5. Artifacts
 * **Infrastructure Code:** [main.tf](./main.tf)
 * **Scaling Evidence:**
   *(Screenshot verifying Auto Scaling Group capacity of 2 instances)*
   ![High Availability Success](../docs/week8/screenshots/ha-success.png)
+
+## 6. Deployment Verification
+To deploy this stack locally:
+```bash
+terraform init
+terraform apply --auto-approve
