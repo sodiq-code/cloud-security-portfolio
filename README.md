@@ -1,48 +1,53 @@
-# 🛡️ PROJECT A: HARDENED WEB APPLICATION (SECURE BASELINE)
+#  Cloud Security & DevSecOps Portfolio
+**By JIMOH SODIQ BOLAJI **
 
-## 1. Executive Summary
-This project implements an Enterprise-Ready Architecture cloud environment using **Infrastructure as Code (Terraform)**. It demonstrates a "Security First" architecture designed to protect sensitive workloads against network intrusion, unauthorized access, and data exfiltration.
+![Status](https://img.shields.io/badge/Status-Completed-success) ![Focus](https://img.shields.io/badge/Focus-AWS%20%7C%20Terraform%20%7C%20Python-blue) ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-orange)
 
-**Core Capabilities:**
-* **Network Segmentation:** Isolated Public/Private subnets to reduce attack surface.
-* **Identity Management:** Least-Privilege IAM Roles replacing static access keys.
-* **DevSecOps:** Automated CI/CD guardrails (Trivy) preventing insecure deployments.
-* **Observability:** Centralized audit logging (CloudTrail) and automated threat detection (GuardDuty).
+##  Executive Summary
+This repository documents my 12-week intensive journey building a production-grade **Cloud Security Portfolio**. It demonstrates my ability to architect, secure, automate, and govern cloud infrastructure using **Infrastructure as Code (Terraform)** and **DevSecOps** principles.
 
-## 2. Architecture
-![Project A Final Architecture](docs/week7/architecture_diagram_final.png)
-
-**Design Decisions:**
-* **VPC Isolation:** Custom VPC with strict route tables ensures the private subnet has zero direct internet exposure.
-* **Immutable Infrastructure:** All resources are provisioned via Terraform modules, ensuring consistency and eliminating configuration drift.
-
-## 3. Security Implementation Details
-
-### A. Infrastructure Security (Network & IAM)
-* **Zero Trust Identity:** EC2 instances utilize IAM Roles with scoped permissions.
-    * *Policy:* `s3:GetObject` restricted strictly to the Logging Bucket (ARN).
-    * *Benefit:* Eliminates credential theft risk; limits blast radius.
-* **Traffic Control:** Security Groups function as a stateful firewall, strictly allow-listing HTTP (Port 80) traffic only.
-
-### B. DevSecOps & Automation
-* **Shift-Left Security:** Integrated `Aqua Security Trivy` into the GitHub Actions pipeline.
-    * *Mechanism:* The build automatically fails if High/Critical vulnerabilities (e.g., Public S3 buckets, unencrypted volumes) are detected.
-    * *Result:* 100% of deployed code complies with security standards before reaching production.
-
-### C. Observability & Compliance
-* **Audit Trail:** CloudTrail enabled globally to track all API activity.
-* **Secure Storage:** Logs are shipped to a dedicated S3 bucket with:
-    * Server-Side Encryption (AES-256).
-    * Public Access Block (BPA) enabled.
-* **Threat Detection:** GuardDuty active for intelligent threat hunting.
-
-## 4. Technical Artifacts
-| Component | Source Code | Status |
-| :--- | :--- | :--- |
-| **Network Module** | [`vpc`](./modules/vpc) | ✅ Ready |
-| **Security Module** | [`security`](./modules/security) | ✅ Production Ready |
-| **Identity Module** | [`iam`](./modules/iam) | ✅ Production Ready |
-| **Deployment Video** | https://www.loom.com/share/3974d3689f974e0eaccf47e1763adacf | 🚀 Live Demo |
+Unlike standard tutorials, this portfolio focuses on **"Real-World" implementation**: solving LocalStack compatibility issues, writing Python automation for SOC tasks, and conducting Linux forensics.
 
 ---
-*Built with Terraform, AWS, and LocalStack.*
+
+##  Project Index (The Work)
+
+| Project Phase | Folder Link | Key Technologies | Description |
+| :--- | :--- | :--- | :--- |
+| **Project A: Secure Network** | **[`week6-deploy`](./week6-deploy)** | VPC, IAM, Subnets | A "Secure-by-Design" segmented network with Public/Private isolation and Least Privilege Identity. |
+| **Project A+: High Availability** | **[`week8-ha-deploy`](./week8-ha-deploy)** | ALB, ASG, WAF | **(DevOps Upgrade)** Refactored Project A to support auto-scaling, load balancing, and Layer 7 Web Application Firewall protection. |
+| **Observability & Logging** | **[`week6-deploy`](./week6-deploy)** | CloudTrail, S3, KMS | Centralized, encrypted audit logging and automated threat detection (GuardDuty). |
+| **Security Automation (SOAR)** | **[`automation`](./automation)** | Python (Boto3) | A custom script that auto-remediates threats by dynamically updating Network ACLs to block malicious IPs. |
+| **Digital Forensics** | **[`forensics`](./forensics)** | Linux, Grep, Bash | Simulated a compromised server investigation to identify indicators of compromise (IoCs) from raw logs. |
+| **Project B: Enterprise Governance** | **[`governance`](./governance)** | AWS Organizations, SCPs | **(GRC Upgrade)** Implemented multi-account guardrails to enforce region locks and log integrity across an organization. |
+
+---
+
+##  Skills Matrix
+
+| Domain | Skills Demonstrated in Code |
+| :--- | :--- |
+| **Cloud Infrastructure** | AWS VPC, EC2, S3, IAM, Route Tables, Internet Gateways |
+| **Infrastructure as Code** | **Terraform:** Modules, State Management, Provider Pinning (v4.67/v5) |
+| **DevSecOps** | **Trivy:** "Shift-Left" scanning in CI/CD pipeline |
+| **Security Engineering** | WAF Configuration, KMS Encryption, Security Groups, NACLs |
+| **Automation** | **Python (Boto3):** API interaction for remediation |
+| **Operations** | **LocalStack:** Docker-based cloud emulation and debugging |
+
+---
+
+##  Key Engineering Challenges Solved
+*Engineering is about solving problems, not just writing code. Here are specific technical hurdles I overcame:*
+
+* **Docker-in-Docker Networking:** Resolved LocalStack compute/EC2 failures by configuring socket mounting and privileged mode in `docker-compose.yml`.
+* **Provider Compatibility:** Debugged and pinned the AWS Terraform Provider to `v4.67.0` to resolve S3 Control API conflicts in the simulation environment.
+* **IAM Policy Logic:** Fixed circular dependency and wildcard risks in IAM policies to enforce true Least Privilege.
+
+---
+
+##  Certifications & Education
+* **B.Eng Computer Engineering** (FUTA, 2025)
+* **Certified in Cybersecurity (CC)** - *ISC2 (In Progress)*
+
+---
+*This portfolio is built with Terraform, AWS, and LocalStack.*
