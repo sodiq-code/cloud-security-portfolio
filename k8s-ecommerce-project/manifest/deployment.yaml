@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: email-service-deployment
+  labels:
+    app: email-service
+spec:
+  replicas: 6 # <--- This tells K8s: "I always want 3 copies running"
+  selector:
+    matchLabels:
+      app: email-service # <--- This is how the Deployment finds its Pods
+  template:
+    metadata:
+      labels:
+        app: email-service # <--- The "Label" we put on the Pods
+    spec:
+      containers:
+      - name: email-app
+        image: email-service:v1 # <--- The image you built on Day 1
+        imagePullPolicy: Never # <--- Tells Minikube: "Use the local image, don't look on the internet"
+        ports:
+        - containerPort: 8080
