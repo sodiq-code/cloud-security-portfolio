@@ -18,5 +18,12 @@ COPY app.py .
 # 6. Expose Port: Tell Docker this app listens on port 8080
 EXPOSE 8080
 
-# 7. Startup Command: What happens when the "Power Button" is pressed?
+
+# 7. Create a non-root user and change ownership in one step
+RUN useradd -m appuser && chown -R appuser /app
+
+# 8. Switch to the new user
+USER appuser
+
+# 9. Startup Command
 CMD ["python", "app.py"]

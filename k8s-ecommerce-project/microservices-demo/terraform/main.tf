@@ -98,3 +98,11 @@ resource "null_resource" "wait_conditions" {
     resource.null_resource.apply_deployment
   ]
 }
+
+master_authorized_networks_config {
+    cidr_blocks {
+      cidr_block   = "192.168.49.2/0" # WARNING: Change this to your specific IP for best practice
+      display_name = "External Access"
+    }
+  }
+

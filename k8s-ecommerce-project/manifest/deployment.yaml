@@ -18,5 +18,13 @@ spec:
       - name: email-app
         image: email-service:v1 # <--- The image you built on Day 1
         imagePullPolicy: Never # <--- Tells Minikube: "Use the local image, don't look on the internet"
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          readOnlyRootFilesystem: true  # This stops attackers from writing malware to disk
+          capabilities:
+            drop:
+              - ALL
         ports:
         - containerPort: 8080
