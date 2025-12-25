@@ -25,7 +25,7 @@ RUN dotnet publish cartservice.csproj -c Debug -o /out
 FROM mcr.microsoft.com/dotnet/aspnet:10.0@sha256:5b558c0d5f65031e34528f0c68c954f03f4db77ee18504cad183d239328f55ca AS final
 # Installing procps on the container to enable debugging of .NET Core
 RUN apt-get update \
-    && apt-get install -y unzip procps wget
+    && apt-get install -y --no-install-recommends unzip procps wget
 WORKDIR /app
 COPY --from=publish /out .
 ENV ASPNETCORE_HTTP_PORTS=7070
