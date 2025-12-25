@@ -18,3 +18,10 @@ AVD-AWS-0054
 # Reason: Instances need internet access to download package updates (yum/apt).
 #         In production, this would be restricted to a NAT Gateway IP or VPC Endpoint.
 AVD-AWS-0104
+
+# Ignore external Google demo Dockerfiles for now
+AVD-DS-0002
+# Ignore external GCP Terraform configurations
+AVD-GCP-0061
+# Ignore external shopping assistant manifest
+AVD-KSV-0014

@@ -14,6 +14,11 @@ spec:
       labels:
         app: email-service # <--- The "Label" we put on the Pods
     spec:
+      # ADD THIS: Pod-level security context
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
       containers:
       - name: email-app
         image: email-service:v1 # <--- The image you built on Day 1
