@@ -7,7 +7,7 @@ services:
       - "4566:4566"  # Main LocalStack API endpoint
       - "4571:4571"  # Legacy port (deprecated in newer versions)
     environment:
-      - LOCALSTACK_AUTH_TOKEN=ls-yiLatazO-6832-wOrA-TIgI-Cito4778a78f
+      - LOCALSTACK_AUTH_TOKEN=${LS_TOKEN}
       - SERVICES=s3,s3control,ec2,iam,sts,kms,cloudtrail,cloudwatch,autoscaling,guardduty,elbv2,elb,wafv2,organizations  # AWS services to emulate
       - PERSISTENCE=1 # Enables persistence for LocalStack data
     volumes:  

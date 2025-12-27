@@ -15,6 +15,7 @@ terraform.tfstate.backup
 # LocalStack / Docker
 localstack/
 localstack_data/
+LS_TOKEN=ls-yiLatazO-6832-wOrA-TIgI-Cito4778a78f
 
 # Docker
 docker-compose.override.yml
